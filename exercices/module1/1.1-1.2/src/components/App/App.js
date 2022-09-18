@@ -1,5 +1,5 @@
 import Content from "components/Content"
-import Header from "components/Header"
+import Header from "components/Header/Header"
 import Total from "components/Total"
 import 'components/App/App.css';
 
