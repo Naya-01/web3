@@ -5,15 +5,15 @@ import Display from 'components/Display/Display';
 function App() {
   const [ counter, setCounter ] = useState(0)
 
-  const increaseByOne = () => setCounter(counter + 1)
-  const decreaseByOne = () => setCounter(counter - 1)
-  const setToZero = () => setCounter(0)
+  const handleClick = (e) => changeCount(e.target.dataset.delta);
+
+  const changeCount = (valeur) =>{setCounter(counter+parseInt(valeur))};
 
   return <>
   <Display counter={counter}/>
-  <Button onclick={increaseByOne} text="plus"/>
-  <Button onclick={decreaseByOne} text="moins"/>
-  <Button onclick={setToZero} text="reset"/>
+  <Button onclick={handleClick} text="plus" delta={1}/>
+  <Button onclick={handleClick} text="moins" delta={-1}/>
+  <Button onclick={handleClick} text="reset" delta={-counter}/>
   </>
 }
 

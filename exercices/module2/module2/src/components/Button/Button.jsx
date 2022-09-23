@@ -1,9 +1,9 @@
 
 const Button = (props) =>{
-    const {onclick, text} = props;
-    
+    const {onclick, delta, text} = props;
+
     return <>
-    <button onClick={onclick}>{text}</button>
+    <button onClick={onclick} data-delta={delta}>  {text}   </button>
     </>
 }
 
