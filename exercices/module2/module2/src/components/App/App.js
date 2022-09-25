@@ -4,7 +4,7 @@ import Display from 'components/Display/Display';
 import useLocalStorage from 'hooks/useLocalStorage';
 
 function App() {
-  const [counter, setCounter] = useLocalStorage("counter", parseInt(localStorage.getItem('counter')) || 0);
+  const [counter, setCounter] = useLocalStorage("counter", 0);
 
   const handleClick = (e) => { changeCount(e.target.dataset.delta) };
 
