@@ -1,4 +1,5 @@
 import Button from 'components/Button/Button'
+import Loading from 'components/Loading/Loading'
 import Statistics from 'components/Statistics/Statistics'
 import { useState } from 'react'
 
@@ -30,10 +31,10 @@ const App = () => {
       <Button handleClick={handleClickGood} text="good"/>
       <Button handleClick={handleClickNeutral} text="neutral"/>
       <Button handleClick={handleClickBad} text="bad"/>
-
-      <Statistics good={good} neutral={neutral} bad={bad}  />
+      <Loading composant={<Statistics good={good} neutral={neutral} bad={bad}/>}/>
     </div>
   )
 }
-
+//<Statistics good={good} neutral={neutral} bad={bad}  />
+//<Loading composant={<Statistics good={good} neutral={neutral} bad={bad}/>}/>
 export default App
