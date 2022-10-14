@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Numbers = ({ persons }) => {
+    console.log(persons, "prout")
     return (
         <>
             <h2>Numbers</h2>

@@ -1,16 +1,22 @@
 import Numbers from 'components/Numbers/Numbers'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import personService from 'services/persons'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      id: 1
-    }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
+
+  useEffect(() => {
+    personService
+      .getAll()
+      .then(response => {
+        setPersons(response)
+      })
+
+  }, [])
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -24,23 +30,27 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     }
-    setPersons(persons.concat(PersonObject))
-    setNewName('')
-    setNewNumber('')
+
+    personService
+      .create(PersonObject)
+      .then(response => {
+        setPersons(persons.concat(response))
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
 
     console.log(persons)
   }
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
 
     console.log(persons)
   }
+  console.log(persons, "je sais pas")
 
   return (
     <div>
