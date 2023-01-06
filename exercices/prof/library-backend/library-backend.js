@@ -2,7 +2,7 @@ const { ApolloServer, gql } = require('apollo-server')
 const { v4: uuid } = require('uuid')
 
 
-let authors = [
+const authors = [
   {
     name: 'Robert Martin',
     id: "afa51ab0-344d-11e9-a414-719c6709cf3e",
@@ -18,22 +18,22 @@ let authors = [
     id: "afa5b6f1-344d-11e9-a414-719c6709cf3e",
     born: 1821
   },
-  { 
+  {
     name: 'Joshua Kerievsky', // birthyear not known
     id: "afa5b6f2-344d-11e9-a414-719c6709cf3e",
   },
-  { 
+  {
     name: 'Sandi Metz', // birthyear not known
     id: "afa5b6f3-344d-11e9-a414-719c6709cf3e",
   },
 ]
 
+/*
+ * It might make more sense to associate a book with its author by storing the author's id in the context of the book instead of the author's name
+ * However, for simplicity, we will store the author's name in connection with the book
+ */
 
-
-
-
-
-let books = [
+const books = [
   {
     title: 'Clean Code',
     published: 2008,
@@ -61,7 +61,7 @@ let books = [
     author: 'Joshua Kerievsky',
     id: "afa5de01-344d-11e9-a414-719c6709cf3e",
     genres: ['refactoring', 'patterns']
-  },  
+  },
   {
     title: 'Practical Object-Oriented Design, An Agile Primer Using Ruby',
     published: 2012,
@@ -113,19 +113,21 @@ const typeDefs = gql`
   type Mutation {
     addBook(
       title: String!
-      author: String!
       published: Int!
-      genres: [String]!
+      author: String!
+      genres: [String!]!
     ): Book
     editAuthor(
       name: String!
       setBornTo: Int!
     ): Author
-
   }
 `
 
 const resolvers = {
+  Author: {
+    bookCount: (root) => books.filter(b => b.author === root.name).length
+  },
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
@@ -137,11 +139,6 @@ const resolvers = {
     },
     allAuthors: () => authors
   },
-
-  Author: {
-    bookCount: (root) => books.filter((b) => b.author === root.name).length,
-  },
-
   Mutation: {
     addBook: (root, args) => {
       const book = { ...args, id: uuid() }
@@ -156,7 +153,7 @@ const resolvers = {
       if (author) author.born = args.setBornTo
       return author
     }
-  },
+  }
 }
 
 const server = new ApolloServer({
