@@ -1,0 +1,17 @@
+@hostname = localhost
+@port = 3001
+@host = http://{{hostname}}:{{port}}
+
+###
+
+POST {{host}}/api/persons HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "tuto de chein",
+  "phone": "12-34-567890123"
+}
+
+
+DELETE {{host}}/api/persons/ HTTP/1.1
